@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="88"
+   height="88"
+   viewBox="0 0 23.283333 23.283334"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="ucak_1.svg"
+   inkscape:export-filename="/home/emre/ucak_1.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="41.08935"
+     inkscape:cy="95.782975"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1299"
+     inkscape:window-height="636"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-273.71665)">
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#000000;fill-opacity:1;stroke-width:0.10649289"
+       d="m 14.564382,288.61471 c 0.28476,-0.0857 1.460399,-0.34557 2.612533,-0.5776 2.701205,-0.54399 4.97411,-1.17635 5.017146,-1.39587 0.05237,-0.26711 0.221391,-0.34718 0.72836,-0.34504 0.354667,10e-4 0.433976,-0.0215 0.298816,-0.0866 -0.101196,-0.0488 -0.467196,-0.0832 -0.813335,-0.0764 -0.85824,0.0166 -1.552225,-0.0838 -1.569189,-0.22697 -0.0077,-0.0653 0.216418,-1.02488 0.49811,-2.13244 0.281693,-1.10756 0.507062,-2.05685 0.500819,-2.10955 -0.0062,-0.0527 -0.260571,-0.0993 -0.565176,-0.10357 -0.634203,-0.009 -0.385221,-0.24198 -2.494818,2.33578 -0.92938,1.13561 -1.258228,1.4641 -1.593709,1.59199 -0.359218,0.13693 -1.302146,0.13068 -6.278331,-0.0416 -7.2513973,-0.25108 -7.9262213,-0.25059 -8.7120763,0.006 -0.327499,0.1071 -0.734103,0.32068 -0.903566,0.47463 -0.169463,0.15395 -0.51741798,0.4089 -0.77323498,0.56656 -0.746243,0.45992 -0.678563,0.98936 0.16638,1.30148 0.74031198,0.27348 1.91953698,0.38983 4.94131798,0.48756 3.836367,0.12406 3.464676,0.0753 3.454156,0.45303 -0.0074,0.26759 0.04028,0.32997 0.308238,0.40317 0.178497,0.0487 0.7317603,0.0268 1.2659953,-0.0502 0.521917,-0.0752 1.04465,-0.14356 1.161629,-0.15186 1.715025,-0.1216 2.314918,-0.19202 2.749939,-0.32288 z"
+       id="path93646-3"
+       sodipodi:nodetypes="cssssssssssssssssssssccc" />
+  </g>
+</svg>

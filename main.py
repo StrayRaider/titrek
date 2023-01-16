@@ -2,13 +2,15 @@ import gi
 import serial
 gi.require_version('Gtk','3.0')
 from pymavlink import mavutil
-from gi.repository import Gtk, Gdk, GObject, GdkPixbuf, GLib, Gio,OsmGpsMap as osmgpsmap
+from gi.repository import Gtk, Gdk, GObject, GdkPixbuf, GLib, Gio
+from gi.repository import OsmGpsMap as osmgpsmap
 
 from i_lib import window
 
 import random, sys, random
 
-class GetPasswd(Gtk.Dialog):
+# dialog window for protocol choosing
+class DialogWin(Gtk.Dialog):
     def __init__(self, parent):
         super().__init__(title="IHA'ya hoşgeldiniz",transient_for=parent, flags=0)
 
@@ -16,28 +18,29 @@ class GetPasswd(Gtk.Dialog):
         self.first_insert = True
 
         box = Gtk.VBox()
-
         t_box = Gtk.HBox()
         box.pack_start(t_box,0,0,5)
 
         t_box.pack_start(Gtk.Label("Protocol"),0,0,5)
         self.protocol_combo = Gtk.ComboBoxText()
+        
+        #all connection elements
         for pro in ["/dev/ttyUSB0","/dev/ttyACMx","udpin:localhost:14551"]:
             self.protocol_combo.append_text(pro)
+        #an element for passing connection
+        self.protocol_combo.append_text("pass")
+        
         t_box.pack_start(self.protocol_combo,1,1,5)
-
         t_box = Gtk.HBox()
         box.pack_start(t_box,0,0,5)
 
+        #connect button definition
         connect_btn = Gtk.Button()
         connect_btn.set_label("Bağlan")
         t_box.pack_start(connect_btn,1,1,5)
         connect_btn.connect("clicked",self.connect_func)
-
         area = self.get_content_area()
         area.add(box)
-
-        #self.connect("key-press-event",self.key_press)
         self.show_all()
 
     def connect_func(self,widget):
@@ -46,14 +49,13 @@ class GetPasswd(Gtk.Dialog):
 
 class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, application_id="mls.akdeniz.edu.tr.fterm",
+        super().__init__(*args, application_id="titrek",
         flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE, **kwargs)
-        GLib.set_application_name("FTerm")
-        GLib.set_prgname('fterm')
+        GLib.set_application_name("Titrek")
+        GLib.set_prgname('titrek')
         self.settings = GLib.KeyFile()
 
         self.win = False
-        #self.add_main_option("fullscrenn", ord("f"), GLib.OptionFlags.NONE, GLib.OptionArg.STRING, "FullScreen", None)
         self.osm = osmgpsmap.Map()
         self.iha_img = GdkPixbuf.Pixbuf.new_from_file('./assets/yaw_c.png')
         self.zoom = 15
@@ -74,17 +76,17 @@ class Application(Gtk.Application):
     def restart(self,error = None):
         if error != None:
             self.create_info_dialog("HATA","Bağlantı Sağlanamadı.\n{}!".format(str(error)))
-        self.passwd.destroy()
+        self.dialog_win.destroy()
         self.do_activate()
 
     def do_activate(self):
         if not self.win:
-            self.passwd = GetPasswd(None)
-            respons = self.passwd.run()
+            self.dialog_win = DialogWin(None)
+            respons = self.dialog_win.run()
             if respons == Gtk.ResponseType.DELETE_EVENT:
                 sys.exit()
             elif respons == Gtk.ResponseType.OK:
-                self.connection_text = self.passwd.protocol_combo.get_active_text()
+                self.connection_text = self.dialog_win.protocol_combo.get_active_text()
                 self.connection = None
                 if self.connection_text == "/dev/ttyACMx":
                     count = 0
@@ -111,6 +113,8 @@ class Application(Gtk.Application):
                         self.connection = mavutil.mavlink_connection("/dev/ttyUSB0")
                     except:
                         self.restart(self.connection_text)
+                elif self.connection_text == "pass":
+                    pass
                 else:
                     self.restart("Lütfen Port Seçimi yapın")
 
@@ -120,7 +124,7 @@ class Application(Gtk.Application):
                         self.create_info_dialog("HATA","Bağlantı Sağlanamadı.\nUçak Bulunamadı!")
                         self.do_activate()
                     else :
-                        self.passwd.destroy()
+                        self.dialog_win.destroy()
                         self.win = window.MainWindow(application=self)
                         self.win.show_all()
                         self.win.present()
@@ -130,6 +134,14 @@ class Application(Gtk.Application):
                         #self.give_all_messages()
                         self.timer = GObject.timeout_add(1000/10, self.update_window)
                         #self.timer = GObject.timeout_add(1000/2, self.loop)
+                else:
+                    self.dialog_win.destroy()
+                    self.win = window.MainWindow(application=self)
+                    self.win.show_all()
+                    self.win.present()
+                    self.give_all_messages()
+                    self.set_ground()
+                    self.timer = GObject.timeout_add(1000/10, self.update_window)
 
             #self.win = FTerm(application=self)
             #self.win.connect("delete-event", self.write_ftrem_settings)

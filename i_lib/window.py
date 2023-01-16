@@ -88,16 +88,22 @@ class MainWindow(Gtk.ApplicationWindow):
         right.pack_start(self.velo_w,0,0,5)
         self.altitude_w = altitude.Altitude()
         right.pack_start(self.altitude_w,0,0,5)
-
-        self.plane_is_armed = self.parent.connection.motors_armed()
+        try:
+            self.plane_is_armed = self.parent.connection.motors_armed()
+        except:
+            self.plane_is_armed = False
+            
         if self.plane_is_armed:
             self.arm_but.set_image(self.yellow_image)
             self.arm_but.set_label("DISARM")
         else:
             self.arm_but.set_image(self.red_image)
             self.arm_but.set_label("ARM")
-
-        self.plane_mode = self.parent.connection.mode_mapping()[self.mode_combo.get_active_text()]
+            
+        try:
+            self.plane_mode = self.parent.connection.mode_mapping()[self.mode_combo.get_active_text()]
+        except:
+            self.plane_mode = "Not Connected"
         self.mode_combo_changed(self.mode_combo)
 
     def arm_disarm(self,widget):
@@ -112,22 +118,31 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.arm_but.set_label("ARM")
 
     def send_arm(self,bool_arm = 1):
-        self.parent.connection.mav.command_long_send(self.parent.connection.target_system, self.parent.connection.target_component,
+        try:
+            self.parent.connection.mav.command_long_send(self.parent.connection.target_system, self.parent.connection.target_component,
         mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,0 ,bool_arm,0,0,0,0,0,0)
+        except:
+            pass
         #print(self.take_message("COMMAND_ACK"))#4 failed 2 rejected
         if not(self.parent.take_message("COMMAND_ACK").result):
             print("arm command recieved")
             self.plane_is_armed = bool_arm
             if bool_arm==1:
-                self.parent.connection.motors_armed_wait()
+                try:
+                    self.parent.connection.motors_armed_wait()
+                except:
+                    pass
         else:
             print("arm command is not recieved")
 
     def mode_combo_changed(self,widget):
         text = widget.get_active_text()
-        mode_id = self.parent.connection.mode_mapping()[text]
-        self.parent.connection.mav.set_mode_send(self.parent.connection.target_system,
-        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,mode_id)
+        try:
+            mode_id = self.parent.connection.mode_mapping()[text]
+            self.parent.connection.mav.set_mode_send(self.parent.connection.target_system,
+            mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,mode_id)
+        except:
+            pass
         try:
             if not(self.parent.take_message("COMMAND_ACK").result):
                 print("set mode command recieved")

@@ -92,7 +92,7 @@ class Application(Gtk.Application):
                     count = 0
                     #baud=115200
                     try:
-                        self.connection = mavutil.mavlink_connection("/dev/ttyACM0", baud=9600)
+                        self.connection = mavutil.mavlink_connection("/dev/ttyACM0")
                     except:
                         count += 1
                     try:
@@ -119,7 +119,9 @@ class Application(Gtk.Application):
                     self.restart("Lütfen Port Seçimi yapın")
 
                 if self.connection != None:
+                    print(self.connection)
                     is_connected = self.connection.wait_heartbeat(timeout = 10)
+                    print(is_connected)
                     if is_connected == None:
                         self.create_info_dialog("HATA","Bağlantı Sağlanamadı.\nUçak Bulunamadı!")
                         self.do_activate()
@@ -201,6 +203,7 @@ class Application(Gtk.Application):
 
     def update_window(self):
         msg = None
+        self.connection.mav.request_data_stream_send(self.connection.target_system, self.connection.target_component,mavutil.mavlink.MAV_DATA_STREAM_ALL, 1, 1)
         try:
             attitude = self.take_message("ATTITUDE",False)
         except:

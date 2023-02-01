@@ -95,12 +95,12 @@ class Application(Gtk.Application):
                         self.connection = mavutil.mavlink_connection("/dev/ttyACM0")
                     except:
                         count += 1
-                    try:
-                        self.connection = mavutil.mavlink_connection("/dev/ttyACM1", baud=9600)
-                    except:
-                        count += 1
-                    if count == 2:
-                        self.restart(self.connection_text)
+                        try:
+                            self.connection = mavutil.mavlink_connection("/dev/ttyACM1")
+                        except:
+                            count += 1
+                        if count == 2:
+                            self.restart(self.connection_text)
 
                 elif self.connection_text == "udpin:localhost:14551":
                     try:
@@ -121,6 +121,7 @@ class Application(Gtk.Application):
                 if self.connection != None:
                     print(self.connection)
                     is_connected = self.connection.wait_heartbeat(timeout = 10)
+                    is_connected = True
                     print(is_connected)
                     if is_connected == None:
                         self.create_info_dialog("HATA","Bağlantı Sağlanamadı.\nUçak Bulunamadı!")

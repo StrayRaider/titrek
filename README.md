@@ -19,9 +19,9 @@ Before running Titrek, ensure you have the following dependencies installed:
     sudo dnf install osm-gps-map-gobject
     ```
 
-- **serial**:
-  ```bash
-  pip install serial
+- **pyserial**:
+```bash
+  pip install pyserial
 ```
 
 
